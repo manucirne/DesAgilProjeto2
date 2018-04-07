@@ -8,7 +8,6 @@ import java.awt.event.ItemListener;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.*;
 import javax.swing.JCheckBox;
 
 import br.pro.hashi.ensino.desagil.rafaelogic.model.Gate;
@@ -27,6 +26,7 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
 	private JCheckBox checkbox3;
 	
 	Source source1 = new Source();
+	//int pinIndex;
 	Source source2 = new Source();
 
 
@@ -61,7 +61,6 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
 			// Adiciona todas as componentes a este subpainel.
 			add(entrada);
 			add(checkbox1);
-			//add(checkbox2);
 			add(saida);
 			add(checkbox3);
 			checkbox2.setEnabled(false);
@@ -84,18 +83,22 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
 		// Estabelece que este subpainel reage ao usu�rio 
 		checkbox1.addActionListener(this);
 		checkbox1.addItemListener(this);
+		checkbox3.addItemListener(this);
 		
 		
 		
 
 		// Estabelece que a terceira checkbox desativado, ela mostra o resultado.
 		checkbox3.setEnabled(false);
+		
+		gate.connect(0,source1);
+		gate.connect(1,source2);
 
 		// Não podemos esquecer de chamar update na inicialização,
 		// caso contrário a interface só ficará consistente depois
 		// da primeira interação do usuário com os campos de texto.
 		// A definição exata do método update é dada logo abaixo.
-		update();
+		//update();
 	}
 	
 	@Override
@@ -103,17 +106,17 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
         Object event = e.getItemSelectable();
         
         if (e.getStateChange() == ItemEvent.SELECTED) {
-        	
+  
         	if (event == checkbox1) {
                 source1.turn(true);
-                System.out.println(source1.read());
+                
             } else if (event == checkbox2) {
                 source2.turn(true);
-                System.out.println(source2.read());
+            
                 //gate.connect(1, source2);
                 //gate.connect(0, source1);
             }
-            
+        	
         }
  
         //Now that we know which button was pushed, find out
@@ -121,25 +124,19 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
         if (e.getStateChange() == ItemEvent.DESELECTED) {
         	if (event == checkbox1) {
                 source1.turn(false);
-                System.out.println(source1.read());
+                //System.out.println(source1.read());
                 //gate.connect(0, source1);
                 //gate.connect(1,source2);
             } else if (event == checkbox2) {
                 source2.turn(false);
-                System.out.println(source2.read());
+                //System.out.println(source2.read());
                 //gate.connect(1, source2);
                 //gate.connect(0, source1);
             }
-            
+        	
         }
         
-        
-        //checkbox3.setSelected(gate.read());
-        System.out.println(gate.read());
-        
 		update();
-
-		
 	}
 
 
@@ -151,21 +148,28 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
 		try {
 			if (gate.size() == 1){
 				gate.connect(0,source1);
+				
 			}
 			else{
 				gate.connect(0,source1);
 				gate.connect(1,source2); 
+				
 			}
+			//checkbox3.setSelected(gate.read());
 			
-
-			//radius = Double.parseDouble(radiusField.getText());
 		}
 		catch(NumberFormatException exception) {
-			checkbox3.setSelected(false);
+			
+			checkbox3.setSelected(true);
 			return;
 		}
+		
+		Boolean a = gate.read();
+		System.out.println(a);
+		checkbox3.setSelected(gate.read());
+		
 
-		//checkbox3.setSelected(gate.read());
+		
 	}
 
 
@@ -173,6 +177,7 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
 	// a reação a uma digitação do usuário nos dois primeiros campos.
 	@Override
 	public void actionPerformed(ActionEvent event) {
+		//update();
 		
 	}
 
