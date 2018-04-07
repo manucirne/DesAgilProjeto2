@@ -96,8 +96,8 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
 		gate.connect(0,source1);
 		gate.connect(1,source2);
 
-		// Quando c hamamos a update aqui o booleano do gate.read() ficou dobrado
-		//update();
+		//Para que a porta correspoda aos pinos desde o início
+		update();
 	}
 	
 	@Override
