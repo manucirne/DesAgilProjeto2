@@ -24,6 +24,10 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
 
 	private JCheckBox checkbox1;
 	private JCheckBox checkbox2;
+	private JCheckBox checkbox3;
+	
+	Source source1 = new Source();
+	Source source2 = new Source();
 
 
 	public GateType(Gate gate) {
@@ -60,16 +64,18 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
 		// Estabelece que este subpainel reage ao usuário 
 		checkbox1.addActionListener(this);
 		checkbox1.addItemListener(this);
-		checkbox2.addItemListener(this);
+		
 		
 		// Define que o segundo checkbox só vai ser usado se o size não for 1
 		if (gate.size() == 1){
 			checkbox2.setEnabled(false);
+			checkbox2.setSelected(true);
 			
 		}
 		else{
-			checkbox2.setSelected(false);
+			checkbox2.addItemListener(this);
 			checkbox2.addActionListener(this);
+			checkbox3.setEnabled(true);
 			
 		}
 		
@@ -88,29 +94,42 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
 	
 	@Override
 	public void itemStateChanged(ItemEvent e) {
-		Source source = new Source();
-		int index = 0;
         Object event = e.getItemSelectable();
         
-        if (event == checkbox1) {
-            source.turn(true);
-            System.out.println(source.read());
-            gate.connect(0, source);
-        } else if (event == checkbox2) {
-            index = 1;
-            source.turn(true);
-            System.out.println(source.read());
-            gate.connect(1, source);
+        if (e.getStateChange() == ItemEvent.SELECTED) {
+        	
+        	if (event == checkbox1) {
+                source1.turn(true);
+                System.out.println(source1.read());
+            } else if (event == checkbox2) {
+                source2.turn(true);
+                System.out.println(source2.read());
+                //gate.connect(1, source2);
+                //gate.connect(0, source1);
+            }
+            
         }
  
         //Now that we know which button was pushed, find out
         //whether it was selected or deselected.
         if (e.getStateChange() == ItemEvent.DESELECTED) {
-        	source.turn(false);
-        	System.out.println(source.read());
+        	if (event == checkbox1) {
+                source1.turn(false);
+                System.out.println(source1.read());
+                //gate.connect(0, source1);
+                //gate.connect(1,source2);
+            } else if (event == checkbox2) {
+                source2.turn(false);
+                System.out.println(source2.read());
+                //gate.connect(1, source2);
+                //gate.connect(0, source1);
+            }
             
         }
         
+        
+        //checkbox3.setSelected(gate.read());
+        System.out.println(gate.read());
         
 		update();
 
@@ -124,17 +143,18 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
 	private void update() {
 
 		try {
+			gate.connect(0,source1);
+            gate.connect(1,source2);           
 			
 
 			//radius = Double.parseDouble(radiusField.getText());
 		}
 		catch(NumberFormatException exception) {
-			//resultField.setText(select1);
+			checkbox3.setSelected(false);
 			return;
 		}
 
-		//boolean result = gate.read();
-		//
+		//checkbox3.setSelected(gate.read());
 	}
 
 
