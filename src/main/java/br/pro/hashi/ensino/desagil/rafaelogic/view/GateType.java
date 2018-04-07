@@ -1,7 +1,5 @@
 package br.pro.hashi.ensino.desagil.rafaelogic.view;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -13,7 +11,7 @@ import javax.swing.JCheckBox;
 import br.pro.hashi.ensino.desagil.rafaelogic.model.Gate;
 import br.pro.hashi.ensino.desagil.rafaelogic.model.Source;
 
-public class GateType extends JPanel implements ActionListener, ItemListener{
+public class GateType extends JPanel implements ItemListener{
 
 	//Linha que ainda não entendemos
 	private static final long serialVersionUID = 1L;
@@ -27,11 +25,11 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
 	private JCheckBox checkbox2;
 	private JCheckBox checkbox3;
 	
-	//dois souurces - acho que deveriamos usar apenas uma e deficir com o pinIndex
+	//dois sources - acho que deveríamos usar apenas uma e definir com o pinIndex
 	//como ela será ligada. Todas as tentativas até agora falharam
 	Source source1 = new Source();
 	Source source2 = new Source();
-	//int pinIndex; - deveriamos usar isso
+	//int pinIndex; - acho que deveríamos usar isso
 
 
 	public GateType(Gate gate) {
@@ -47,10 +45,10 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
 		checkbox2 = new JCheckBox();//entrada2
 		checkbox3 = new JCheckBox();//saída
 		 
-		//Criamos os checkboxes com nomes (.setText) e não selecionaods a princípio
-		checkbox1.setText("A");
+		//Criamos os checkboxes com nomes (.setText) e não selecionados a princípio
+		checkbox1.setText("Pino 1");
 		checkbox1.setSelected(false);
-		checkbox2.setText("B");
+		checkbox2.setText("Pino 2");
 		checkbox2.setSelected(false);
 		//checkbox3.setText("Saída");
 		checkbox3.setSelected(false);
@@ -63,17 +61,17 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
 		if (gate.size() == 1){
 			
 			// Adiciona todas as componentes a este subpainel.
+			//Apenas com um checkbox de entrada por ser a porta Not
 			add(entrada);
 			add(checkbox1);
 			add(saida);
 			add(checkbox3);
-			checkbox2.setEnabled(false);
-			checkbox2.setSelected(true);
 			
 		}
 		else{
 			
 			// Adiciona todas as componentes a este subpainel.
+			//Com dois checkboxes de entrada
 			add(entrada);
 			add(checkbox1);
 			add(checkbox2);
@@ -81,22 +79,21 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
 			add(checkbox3);
 			// Estabelece que este subpainel reage ao usuário 
 			checkbox2.addItemListener(this);
-			checkbox2.addActionListener(this);
 			
 		}
 		
 		// Estabelece que este subpainel reage ao usuário 
-		checkbox1.addActionListener(this);
 		checkbox1.addItemListener(this);
 
-		// Estabelece que a terceira checkbox desativado, ela mostra o resultado.
+		// Estabelece que a terceira checkbox desativado, ela apenas mostra 
+		//o resultado.
 		checkbox3.setEnabled(false);
 		
 		//setamos o gate já no início
 		gate.connect(0,source1);
 		gate.connect(1,source2);
 
-		//Para que a porta correspoda aos pinos desde o início
+		//Para que a porta correspoda ao estado dos pinos desde o início
 		update();
 	}
 	
@@ -104,15 +101,17 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
 	public void itemStateChanged(ItemEvent e) {
         Object event = e.getItemSelectable();
         
-        //se o item em questão estuver selecionado
+        //se o item em questão estiver selecionado
         if (e.getStateChange() == ItemEvent.SELECTED) {
         	
+        	//source1 para o primeiro pino e source2 para o segundo pino
         	//se for a chechbox 1 usaremos o primeiro pino
         	if (event == checkbox1) {
                 source1.turn(true);
                 
             //se for a checkbox2 usaremos o segundo pino
-            } else if (event == checkbox2) {
+            } 
+        	else if (event == checkbox2) {
                 source2.turn(true);
             }
         	
@@ -125,7 +124,8 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
                 source1.turn(false);
                 
               //se for a chechbox 2 usaremos o primeiro pino
-            } else if (event == checkbox2) {
+            } 
+        	else if (event == checkbox2) {
                 source2.turn(false);
             }
         	
@@ -158,22 +158,14 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
 		catch(NumberFormatException exception) {
 			return;
 		}
+		
+		//Diz para o checkbox de saída o que deve ser feito (true ou false)
+		//da leitura do gate com os pinod de entrada
 		checkbox3.setSelected(gate.read());
-		
-
-		
-	}
-
-
-	// MÃ©todo exigido pela interface ActionListener, que representa
-	// a reaÃ§Ã£o a uma digitaÃ§Ã£o do usuÃ¡rio nos dois primeiros campos.
 	
-	//será que podemos apagar isso, já que não estamo usando?
-	@Override
-	public void actionPerformed(ActionEvent event) {
-		//update();
-		
 	}
+
+	
 
 
 
