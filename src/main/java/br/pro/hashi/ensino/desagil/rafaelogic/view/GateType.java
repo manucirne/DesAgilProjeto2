@@ -20,14 +20,18 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
 
 	//Gate que será lido caso seja selecionado no menu
 	private Gate gate;
-
+	
+	
+	//checkbox
 	private JCheckBox checkbox1;
 	private JCheckBox checkbox2;
 	private JCheckBox checkbox3;
 	
+	//dois souurces - acho que deveriamos usar apenas uma e deficir com o pinIndex
+	//como ela será ligada. Todas as tentativas até agora falharam
 	Source source1 = new Source();
-	//int pinIndex;
 	Source source2 = new Source();
+	//int pinIndex; - deveriamos usar isso
 
 
 	public GateType(Gate gate) {
@@ -39,9 +43,9 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
 		JLabel saida = new JLabel("Saída");
 		
 		//Chackboxes para leitura de booleanos
-		checkbox1 = new JCheckBox();
-		checkbox2 = new JCheckBox();
-		checkbox3 = new JCheckBox();
+		checkbox1 = new JCheckBox();//entrada1
+		checkbox2 = new JCheckBox();//entrada2
+		checkbox3 = new JCheckBox();//saída
 		 
 		//Criamos os checkboxes com nomes (.setText) e não selecionaods a princípio
 		checkbox1.setText("A");
@@ -75,6 +79,7 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
 			add(checkbox2);
 			add(saida);
 			add(checkbox3);
+			// Estabelece que este subpainel reage ao usuário 
 			checkbox2.addItemListener(this);
 			checkbox2.addActionListener(this);
 			
@@ -83,20 +88,15 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
 		// Estabelece que este subpainel reage ao usuário 
 		checkbox1.addActionListener(this);
 		checkbox1.addItemListener(this);
-		
-		
-		
 
 		// Estabelece que a terceira checkbox desativado, ela mostra o resultado.
 		checkbox3.setEnabled(false);
 		
+		//setamos o gate já no início
 		gate.connect(0,source1);
 		gate.connect(1,source2);
 
-		// NÃ£o podemos esquecer de chamar update na inicializaÃ§Ã£o,
-		// caso contrÃ¡rio a interface sÃ³ ficarÃ¡ consistente depois
-		// da primeira interaÃ§Ã£o do usuÃ¡rio com os campos de texto.
-		// A definiÃ§Ã£o exata do mÃ©todo update Ã© dada logo abaixo.
+		// Quando c hamamos a update aqui o booleano do gate.read() ficou dobrado
 		//update();
 	}
 	
@@ -104,44 +104,40 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
 	public void itemStateChanged(ItemEvent e) {
         Object event = e.getItemSelectable();
         
+        //se o item em questão estuver selecionado
         if (e.getStateChange() == ItemEvent.SELECTED) {
-  
+        	
+        	//se for a chechbox 1 usaremos o primeiro pino
         	if (event == checkbox1) {
                 source1.turn(true);
                 
+            //se for a checkbox2 usaremos o segundo pino
             } else if (event == checkbox2) {
                 source2.turn(true);
-            
-                //gate.connect(1, source2);
-                //gate.connect(0, source1);
             }
         	
         }
  
-        //Now that we know which button was pushed, find out
-        //whether it was selected or deselected.
+        //se o item em questão for "deselecionado"
         if (e.getStateChange() == ItemEvent.DESELECTED) {
+        	//se for a chechbox 1 usaremos o primeiro pino
         	if (event == checkbox1) {
                 source1.turn(false);
-                //System.out.println(source1.read());
-                //gate.connect(0, source1);
-                //gate.connect(1,source2);
+                
+              //se for a chechbox 2 usaremos o primeiro pino
             } else if (event == checkbox2) {
                 source2.turn(false);
-                //System.out.println(source2.read());
-                //gate.connect(1, source2);
-                //gate.connect(0, source1);
             }
         	
         }
-        
+        //update para que a mudança do usuário seja registrada
 		update();
 	}
 
 
 	// Método que usa conect e read dos gates para mostrar o resultado.
 	// Ele também atualiza mudanças que o usuário faça, ou seja, se ele
-	//troca a porta ou a conecção dos pinos.
+	//troca a conecção dos pinos.
 	private void update() {
 
 		try {
@@ -154,18 +150,14 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
 				gate.connect(1,source2); 
 				
 			}
-			//checkbox3.setSelected(gate.read());
 			
-		}
-		catch(NumberFormatException exception) {
-			
-			checkbox3.setSelected(true);
-			return;
 		}
 		
-		Boolean a = gate.read();
-		System.out.println(checkbox3);
-		System.out.println(checkbox2);
+		//não sei como usar o que pra que servirá para nós isso, já que não tem como 
+		//dar erro nos booleanos
+		catch(NumberFormatException exception) {
+			return;
+		}
 		checkbox3.setSelected(gate.read());
 		
 
@@ -175,6 +167,8 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
 
 	// MÃ©todo exigido pela interface ActionListener, que representa
 	// a reaÃ§Ã£o a uma digitaÃ§Ã£o do usuÃ¡rio nos dois primeiros campos.
+	
+	//será que podemos apagar isso, já que não estamo usando?
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		//update();
