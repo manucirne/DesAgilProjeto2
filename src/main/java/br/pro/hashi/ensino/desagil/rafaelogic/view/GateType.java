@@ -53,31 +53,37 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
 
 		// Leyout - um abaixo do outro
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-		// Adiciona todas as componentes a este subpainel.
-		add(entrada);
-		add(checkbox1);
-		add(checkbox2);
-		add(saida);
-		add(checkbox3);
-
-		// Estabelece que este subpainel reage ao usuário 
-		checkbox1.addActionListener(this);
-		checkbox1.addItemListener(this);
 		
 		
 		// Define que o segundo checkbox só vai ser usado se o size não for 1
 		if (gate.size() == 1){
+			
+			// Adiciona todas as componentes a este subpainel.
+			add(entrada);
+			add(checkbox1);
+			//add(checkbox2);
+			add(saida);
+			add(checkbox3);
 			checkbox2.setEnabled(false);
 			checkbox2.setSelected(true);
 			
 		}
 		else{
+			
+			// Adiciona todas as componentes a este subpainel.
+			add(entrada);
+			add(checkbox1);
+			add(checkbox2);
+			add(saida);
+			add(checkbox3);
 			checkbox2.addItemListener(this);
 			checkbox2.addActionListener(this);
-			checkbox3.setEnabled(true);
 			
 		}
+		
+		// Estabelece que este subpainel reage ao usuário 
+		checkbox1.addActionListener(this);
+		checkbox1.addItemListener(this);
 		
 		
 		
@@ -143,8 +149,13 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
 	private void update() {
 
 		try {
-			gate.connect(0,source1);
-            gate.connect(1,source2);           
+			if (gate.size() == 1){
+				gate.connect(0,source1);
+			}
+			else{
+				gate.connect(0,source1);
+				gate.connect(1,source2); 
+			}
 			
 
 			//radius = Double.parseDouble(radiusField.getText());
