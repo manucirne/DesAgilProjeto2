@@ -1,9 +1,10 @@
 package br.pro.hashi.ensino.desagil.rafaelogic.model;
 
 public class NotGate extends Gate{
-	NandGate nand1;
+	private NandGate nand1;
 	
 	public NotGate(){
+		super("Not");
 		nand1 = new NandGate();
 	}
 	

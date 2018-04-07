@@ -4,6 +4,7 @@ public class AndGate extends Gate {
 	private NandGate nand1;
 	
 	public AndGate(){
+		super("And");
 		nand1= new NandGate();
 	}
 
