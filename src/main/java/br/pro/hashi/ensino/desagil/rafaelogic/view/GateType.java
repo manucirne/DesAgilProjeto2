@@ -41,7 +41,7 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
 		//Chackboxes para leitura de booleanos
 		checkbox1 = new JCheckBox();
 		checkbox2 = new JCheckBox();
-		JCheckBox checkbox3 = new JCheckBox();
+		checkbox3 = new JCheckBox();
 		 
 		//Criamos os checkboxes com nomes (.setText) e não selecionaods a princípio
 		checkbox1.setText("A");
@@ -83,7 +83,6 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
 		// Estabelece que este subpainel reage ao usuário 
 		checkbox1.addActionListener(this);
 		checkbox1.addItemListener(this);
-		checkbox3.addItemListener(this);
 		
 		
 		
@@ -165,7 +164,8 @@ public class GateType extends JPanel implements ActionListener, ItemListener{
 		}
 		
 		Boolean a = gate.read();
-		System.out.println(a);
+		System.out.println(checkbox3);
+		System.out.println(checkbox2);
 		checkbox3.setSelected(gate.read());
 		
 
