@@ -137,7 +137,7 @@ public class GateType extends JPanel implements ItemListener{
 
 	// Método que usa conect e read dos gates para mostrar o resultado.
 	// Ele também atualiza mudanças que o usuário faça, ou seja, se ele
-	//troca a conecção dos pinos.
+	//troca a conexão dos pinos.
 	private void update() {
 
 		try {
