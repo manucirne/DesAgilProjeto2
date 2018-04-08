@@ -10,8 +10,7 @@ public class OrGate extends Gate {
 		nand1 = new NandGate();
 		nand2 = new NandGate();
 		nand3 = new NandGate();
-		nand3.connect(0,nand1);
-		nand3.connect(1, nand2);
+
 	}
 
 	
@@ -31,6 +30,8 @@ public class OrGate extends Gate {
 	
 	@Override
 	public boolean read() {	
+		nand3.connect(0,nand1);
+		nand3.connect(1, nand2);
 		return nand3.read();
 	}
 

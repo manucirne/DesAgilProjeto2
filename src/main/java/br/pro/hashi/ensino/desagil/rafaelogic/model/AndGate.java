@@ -8,8 +8,7 @@ public class AndGate extends Gate {
 		super("And");
 		nand1= new NandGate();
 		nand2= new NandGate();
-		nand2.connect(0, nand1);
-		nand2.connect(1, nand1);
+
 	}
 
 	@Override
@@ -21,6 +20,8 @@ public class AndGate extends Gate {
 	
 	@Override
 	public boolean read() {
+		nand2.connect(0, nand1);
+		nand2.connect(1, nand1);
 		return nand2.read();
 	}
 	
