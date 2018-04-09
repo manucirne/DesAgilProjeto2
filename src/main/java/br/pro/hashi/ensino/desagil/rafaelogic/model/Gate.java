@@ -13,14 +13,7 @@ public abstract class Gate implements Emitter, Receiver {
 	}
 	
 	public int size(){
-		int s;
-		if(name == "Not"){
-			s = 1;
-			
-		}
-		else{
-			s = 2;
-		}
+		int s = 0;
 		
 		return s;
 	}

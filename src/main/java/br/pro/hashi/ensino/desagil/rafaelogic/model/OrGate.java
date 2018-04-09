@@ -34,6 +34,12 @@ public class OrGate extends Gate {
 		nand3.connect(1, nand2);
 		return nand3.read();
 	}
+	
+	public int size(){
+		int s = 2;
+		
+		return s;
+	}
 
 
 }

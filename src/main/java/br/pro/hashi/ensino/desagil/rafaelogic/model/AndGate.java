@@ -25,5 +25,10 @@ public class AndGate extends Gate {
 		return nand2.read();
 	}
 	
+	public int size(){
+		int s = 2;
+		
+		return s;
+	}
 
 }

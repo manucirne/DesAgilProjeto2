@@ -17,4 +17,10 @@ public class NandGate extends Gate {
 	public boolean read() {
 		return !(emitters[0].read() && emitters[1].read());
 	}
+	
+	public int size(){
+		int s = 2;
+		
+		return s;
+	}
 }

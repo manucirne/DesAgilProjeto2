@@ -38,6 +38,12 @@ public class XorGate extends Gate {
 		nand4.connect(1, nand3);
 		return nand4.read();
 	}
+	
+	public int size(){
+		int s = 2;
+		
+		return s;
+	}
 
 
 
